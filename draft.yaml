@@ -1,0 +1,62 @@
+models:
+  Supplier:
+    name: string
+    relationships:
+      belongsToMany: User
+      hasMany: Product, Brand, Campaign
+
+  Product:
+    api_parent_id: integer
+    api_id: integer
+    brand_id: unsignedInteger
+    supplier_id: unsignedInteger
+    title: string
+    reference: string
+    price: decimal:8,3
+    sale_price: decimal:8,3
+    rr_price: decimal:8,3
+    stock: integer
+    images: json
+    relationships:
+      belongsTo: Brand, Category
+      belongsToMany: Promotion
+
+  Category:
+    api_id: unsignedInteger
+    name: string
+    url: string
+    level: unsignedInteger
+    parent_id: unsignedInteger
+    cost_per_click: decimal:5,2
+    relationships:
+      hasMany: Product
+      belongsToMany: Promotion
+
+  Brand:
+    api_id: unsignedInteger
+    name: string
+    supplier_id: unsignedInteger
+    relationships:
+      belongsTo: Supplier
+      hasMany: Product
+
+  Campaign:
+    name: string
+    start_date: datetime
+    end_date: datetime
+    budget: decimal:8,2
+    relationships:
+      belongsTo: Supplier
+      hasMany: Promotion
+
+  Promotion:
+    campaign_id: unsignedInteger
+    category_id: unsignedInteger
+    cost_per_click: decimal:5,2
+    budget: decimal:8,2
+    relationships:
+      belongsTo: Campaign
+      hasOne: Category
+      belongsToMany: Product
+
+
