@@ -23,8 +23,8 @@ class PromotionOverview extends BaseWidget
                 ->descriptionIcon('heroicon-o-user-group')
                 ->chart([1,23,34,47,58,90,114,190])
                 ->color('primary'),
-            Stat::make('Conversion Rate', '4%')
-                ->description('The percentage of clicks that have resulted in an order.')
+            Stat::make('Orders', '0')
+                ->description('The number of orders placed from this promotion.')
                 ->descriptionIcon('heroicon-o-user-group')
                 ->chart([1,23,34,47,58,90,114,190])
                 ->color('success'),

@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SupplierResource\Pages;
-use App\Filament\Resources\SupplierResource\RelationManagers;
-use App\Models\Supplier;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Supplier;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\SupplierResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\SupplierResource\RelationManagers;
+use App\Filament\Resources\SupplierResource\RelationManagers\BrandsRelationManager;
 
 class SupplierResource extends Resource
 {
@@ -25,7 +26,8 @@ class SupplierResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpan(2),
             ]);
     }
 
@@ -66,7 +68,7 @@ class SupplierResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            'brands' => BrandsRelationManager::class,
         ];
     }
 

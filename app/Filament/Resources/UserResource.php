@@ -42,6 +42,7 @@ class UserResource extends Resource
                     ->required(fn (string $context): bool => $context === 'create')
                     ->maxLength(255),
                 Select::make('suppliers')
+                    ->visible($form->getOperation() !== 'create' && !$form->model->hasRole('admin'))
                     ->multiple()
                     ->preload()
                     ->relationship('suppliers', 'name')
@@ -52,6 +53,18 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('role')
+                    ->badge()
+                    ->getStateUsing(function ($record) {
+                        return $record->hasRole('admin') ? 'Admin' : 'User';
+                    })
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Admin' => 'success',
+                        'User' => 'primary',
+                    })
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
@@ -78,9 +91,7 @@ class UserResource extends Resource
 
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+
             ]);
     }
 

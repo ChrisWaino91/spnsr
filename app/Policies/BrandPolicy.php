@@ -37,7 +37,7 @@ class BrandPolicy
      */
     public function update(User $user, Brand $brand): bool
     {
-        return false;
+        return $user->can('view brands');
     }
 
     /**

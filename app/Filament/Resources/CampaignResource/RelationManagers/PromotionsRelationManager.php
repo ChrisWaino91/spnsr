@@ -5,6 +5,7 @@ namespace App\Filament\Resources\CampaignResource\RelationManagers;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Product;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use App\Models\Category;
 use Filament\Forms\Form;
@@ -42,7 +43,7 @@ class PromotionsRelationManager extends RelationManager
                         if ($isEditing) {
                            return Category::where('id', $this->mountedTableActionsData[0]['category_id'])->pluck('name', 'id')->toArray();
                         } else {
-                            return Category::doesntHave('promotion')->pluck('name', 'id')->toArray();
+                            return Category::where('promotion_id', 0)->pluck('name', 'id')->toArray();
                         }
 
                     })
@@ -61,9 +62,13 @@ class PromotionsRelationManager extends RelationManager
                 Forms\Components\MultiSelect::make('product')
                     ->label('Products')
                     ->relationship('products', 'title')
-                    ->options(function () {
+                    ->options(function (Get $get) {
                         $userId = Auth::id();
+                        $categoryId = $get('category_id');
                         $products = Product::query()
+                            ->whereHas('categories', function (Builder $query) use ($categoryId) {
+                                $query->where('categories.id', $categoryId);
+                            })
                             ->whereHas('brand.supplier.users', function (Builder $query) use ($userId) {
                                 $query->where('users.id', $userId);
                             })

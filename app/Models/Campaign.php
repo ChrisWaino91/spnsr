@@ -49,4 +49,16 @@ class Campaign extends Model
             ->where('campaigns.id', $this->id)
             ->count();
     }
+
+    public function spend()
+    {
+        $totalSpend = 0;
+
+        $this->promotions->each(function ($promotion) use (&$totalSpend) {
+            $clicksCount = $promotion->clicks->count();
+            $totalSpend += $clicksCount * $promotion->cost_per_click;
+        });
+
+        return $totalSpend;
+    }
 }

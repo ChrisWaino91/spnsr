@@ -17,7 +17,7 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function getNavigationGroup(): string
     {
@@ -28,16 +28,7 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('api_parent_id')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\TextInput::make('api_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Select::make('brand_id')
-                    ->relationship('brand', 'name')
-                    ->required(),
-                Forms\Components\TextInput::make('supplier_id')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('title')
@@ -49,21 +40,18 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('£'),
                 Forms\Components\TextInput::make('sale_price')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('rr_price')
+                    ->numeric()
+                    ->prefix('£'),
+                Forms\Components\TextInput::make('rrp_price')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->prefix('£'),
                 Forms\Components\TextInput::make('stock')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('images')
-                    ->required(),
-                Forms\Components\Select::make('category_id')
-                    ->relationship('category', 'name')
-                    ->required(),
             ]);
     }
 
@@ -82,10 +70,6 @@ class ProductResource extends Resource
                 });
             })
             ->columns([
-                Tables\Columns\TextColumn::make('category.name')
-                    ->sortable()
-                    ->searchable()
-                    ->toggleable(),
                 Tables\Columns\TextColumn::make('brand.name')
                     ->numeric()
                     ->sortable()

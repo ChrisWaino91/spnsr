@@ -23,6 +23,13 @@ class Promotion extends Model
         'budget' => 'decimal:2',
     ];
 
+    protected static function booted()
+    {
+        static::deleting(function ($promotion) {
+            $promotion->update(['active' => false]);
+        });
+    }
+
     public function campaign(): BelongsTo
     {
         return $this->belongsTo(Campaign::class);
@@ -46,6 +53,11 @@ class Promotion extends Model
     public function clicks(): HasMany
     {
         return $this->hasMany(Click::class);
+    }
+
+    public function spend()
+    {
+        return $this->clicks->count() * $this->cost_per_click;
     }
 
     public function url()

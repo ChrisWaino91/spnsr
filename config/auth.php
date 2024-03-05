@@ -41,9 +41,9 @@ return [
             'provider' => 'users',
         ],
 
-        'supplier' => [
+        'user' => [
             'driver' => 'sanctum',
-            'provider' => 'suppliers',
+            'provider' => 'user',
         ],
     ],
 
@@ -68,11 +68,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-
-        'suppliers' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Supplier::class,
         ],
 
         // 'users' => [

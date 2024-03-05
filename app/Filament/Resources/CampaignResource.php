@@ -25,7 +25,7 @@ class CampaignResource extends Resource
 {
     protected static ?string $model = Campaign::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-beaker';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -76,10 +76,21 @@ class CampaignResource extends Resource
                             ->required()
                             ->prefix('£')
                             ->numeric(),
+                        Forms\Components\TextInput::make('spend')
+                            ->label('Current Spend')
+                            ->disabled()
+                            ->placeholder(function ($record) {
+                                return empty($record) ? 0 : $record->spend();
+                            })
+                            ->hidden(function ($record) {
+                                return empty($record);
+                            })
+                            ->prefix('£'),
                         Forms\Components\Toggle::make('active')
                             ->onColor('success')
                             ->offColor('danger')
-                    ])->columns(2)
+                    ]),
+
             ]);
     }
 

@@ -86,11 +86,7 @@ class ImportProducts extends Command
 
         }
 
-        // call API endpoint with this data and chunk it and then process it.
-        // then save it all and make sure we handle images, too.
-
-        // Assuming $token holds your Sanctum token
-        $token = '3|uQao7xEcodAzdof45nAiHEsjdlnIybaHQ8iG4gzQe1a0db54';
+        $token = '1|iqGe4EcuXIr2amaX4pT0U2O01bmctqxtsP1r1plP1c7f0301';
 
         $client = new Client([
             'base_uri' => 'http://127.0.0.1:8000',

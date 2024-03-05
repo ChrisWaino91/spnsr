@@ -23,13 +23,14 @@ class Category extends Model
         'cost_per_click' => 'decimal:2',
     ];
 
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function promotion(): HasOne
     {
         return $this->hasOne(Promotion::class);
     }
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
 }

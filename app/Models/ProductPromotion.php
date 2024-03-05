@@ -11,5 +11,5 @@ class ProductPromotion extends Model
 
     protected $table = 'product_promotion';
 
-    protected $fillable = ['campaign_id', 'product_id'];
+    protected $guarded = [];
 }

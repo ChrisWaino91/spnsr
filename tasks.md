@@ -1,25 +1,13 @@
-run migrate fresh
-create a new admin user
-create a new user and supplier and link
-create an option to show / generate an api key for the supplier
-reimport all the new products
-Show budget and used budget or remaining budget based on clicks
+Create the logic to show invoices, an invoice will show each campaign, each promotion and clicks etc stored against each
+    this will then tot the amount up and produce a final amount that is ready to be settled for a given month
+
 Create Visualsoft module to display and log the options, where appropriate
-Ensure that the supplier refreshes when we save a user (maybe redirect to the index view)
-Add links to urls and relations where appropriate
-Go through the whole process and make sure it makes sense
 Create the visualsoft module that will demonstrate the clicks/orders feature 
 
+Add links to urls and relations where appropriate
+Go through the whole process and make sure it makes sense
+In the category list, make the url be a link that clicks and open in new tab
 
-API Token:
-1|EMHHY3VlW24PP9pJf1Oqe02DWSlojUmK3Cbr3M3h5364ec99
-
-
-Designs:
-
-On the category-show view:
-three widgets: cost per click, heirarchy, average conversion rate, 
-
-
-on the campaigns-show view:
-number of active campaigns, 
+Organise breadcrumbs
+Ensure an admin can create a campaign and promotion on behalf of a supplier
+Add the ability to create campaigns based on a cost per impression and cost per day model

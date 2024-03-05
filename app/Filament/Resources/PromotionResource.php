@@ -28,7 +28,7 @@ class PromotionResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Campaign Details')
+                Section::make('Promotion Details')
                     ->description('Here is where you configure the specific ads you want to run against a category. Remember you can run as many promotions as you wish within a campaign.')
                     ->schema([
                         Forms\Components\Select::make('campaign_id')
@@ -42,16 +42,22 @@ class PromotionResource extends Resource
                         Forms\Components\TextInput::make('cost_per_click')
                             ->prefix('£')
                             ->required()
-                            ->disabled()
-                            ->numeric(),
+                            ->disabled(),
                         Forms\Components\TextInput::make('budget')
                             ->prefix('£')
                             ->required()
                             ->numeric(),
+                        Forms\Components\TextInput::make('spend')
+                            ->label('Current Spend')
+                            ->disabled()
+                            ->placeholder(function ($record) {
+                                return $record->spend();
+                            })
+                            ->prefix('£'),
                         Forms\Components\Toggle::make('active')
                             ->onColor('success')
                             ->offColor('danger')
-                    ])->columns(2)
+                    ]),
             ]);
     }
 

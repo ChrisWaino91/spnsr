@@ -64,8 +64,8 @@ class BrandResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                ])
+                Tables\Actions\EditAction::make(),
+            ])
             ->bulkActions([
 
             ]);
@@ -83,6 +83,7 @@ class BrandResource extends Resource
         return [
             'index' => Pages\ListBrands::route('/'),
             'view' => Pages\ViewBrand::route('/{record}/view'),
+            'edit' => Pages\EditBrand::route('/{record}'),
         ];
     }
 }
