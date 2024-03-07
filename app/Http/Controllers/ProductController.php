@@ -22,7 +22,7 @@ class ProductController extends Controller
                 empty($productData['api_id']) ||
                 empty($productData['title']) ||
                 empty($productData['reference'])
-                ) {
+            ) {
                 continue;
             }
 
@@ -37,7 +37,8 @@ class ProductController extends Controller
                     'price' => $productData['price'],
                     'sale_price' => $productData['sale_price'],
                     'rrp_price' => $productData['rrp_price'],
-                    'stock' => $productData['stock']
+                    'stock' => $productData['stock'],
+                    'images' => $productData['images'] ?? null,
                 ]
             );
 
