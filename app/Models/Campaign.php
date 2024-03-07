@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,6 +33,11 @@ class Campaign extends Model
         return $this->hasMany(Promotion::class);
     }
 
+    public function url(): string
+    {
+        return route('filament.admin.resources.campaigns.edit', $this);
+    }
+
     public function getTotalClicksAttribute()
     {
         return DB::table('campaigns')
@@ -50,15 +56,26 @@ class Campaign extends Model
             ->count();
     }
 
-    public function spend()
+    public function spend($month = null)
     {
-        $totalSpend = 0;
+        $totalSpend = 0.00;
 
-        $this->promotions->each(function ($promotion) use (&$totalSpend) {
-            $clicksCount = $promotion->clicks->count();
+        $this->promotions->each(function ($promotion) use (&$totalSpend, $month) {
+            $clicks = $promotion->clicks;
+            if ($month) {
+                $startOfMonth = $month->copy()->startOfMonth();
+                $endOfMonth = $month->copy()->endOfMonth();
+
+                $clicks = $clicks->filter(function ($click) use ($startOfMonth, $endOfMonth) {
+                    $clickDate = Carbon::parse($click->created_at);
+                    return $clickDate->between($startOfMonth, $endOfMonth);
+                });
+            }
+
+            $clicksCount = $clicks->count();
             $totalSpend += $clicksCount * $promotion->cost_per_click;
         });
 
-        return $totalSpend;
+        return number_format($totalSpend, 2);
     }
 }

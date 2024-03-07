@@ -33,4 +33,9 @@ class Supplier extends Model
     {
         return $this->hasMany(Campaign::class);
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

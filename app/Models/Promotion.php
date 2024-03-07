@@ -62,6 +62,6 @@ class Promotion extends Model
 
     public function url()
     {
-        return '/promotions/' . $this->id . '/edit';
+        return route('filament.admin.resources.promotions.edit', $this);
     }
 }

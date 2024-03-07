@@ -1,8 +1,10 @@
-Create the logic to show invoices, an invoice will show each campaign, each promotion and clicks etc stored against each
-    this will then tot the amount up and produce a final amount that is ready to be settled for a given month
+
 
 Create Visualsoft module to display and log the options, where appropriate
 Create the visualsoft module that will demonstrate the clicks/orders feature 
+
+https://www.youtube.com/watch?v=6c4jVLWmDYU&t=14176s
+Copy the above dashboard
 
 Add links to urls and relations where appropriate
 Go through the whole process and make sure it makes sense
