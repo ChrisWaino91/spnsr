@@ -11,6 +11,20 @@ class ProductController extends Controller
     public function log(Request $request)
     {
         $data = $request->get('data');
+        $rules = [
+            '*.api_id' => 'required',
+            '*.title' => 'required',
+            '*.reference' => 'required',
+            '*.images.medium' => 'nullable|url',
+            '*.images.thumbnail' => 'nullable|url',
+            '*.categories.*.category_id' => 'required',
+        ];
+
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
+        }
 
         if (empty($data)) {
             return response()->json(['message' => 'No data provided. Please check payload.'], 400);
@@ -41,8 +55,8 @@ class ProductController extends Controller
                     'images' => isset($productData['images']) ? [
                         'medium' => $productData['images']['medium'] ?? null,
                         'thumbnail' => $productData['images']['thumbnail'] ?? null,
-                    ] : null,                ]
-            );
+                    ] : null,
+                ]);
 
             // check there are categories
             foreach ($productData['categories'] as $category) {

@@ -20,7 +20,6 @@ class CreateApiToken extends Command
             return 1;
         }
 
-        // Generate token
         $token = $user->createToken('API Token')->plainTextToken;
 
         $this->info("API Token for user {$userId}: {$token}");
