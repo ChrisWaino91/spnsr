@@ -41,11 +41,6 @@ class ProductController extends Controller
                 continue;
             }
 
-            if (isset($productData['product']['images'])) {
-                Log::info('Product with image data:', ['data' => $productData]);
-                dd();
-            }
-
             $product = Product::firstOrCreate(
                 [
                     'api_id' => $productData['product']['api_id']
@@ -58,11 +53,12 @@ class ProductController extends Controller
                     'sale_price' => $productData['product']['sale_price'],
                     'rrp_price' => $productData['product']['rrp_price'],
                     'stock' => $productData['product']['stock'],
-                    'images' => isset($productData['product']['images']) ? [
-                        'medium' => $productData['product']['images']['medium'] ?? null,
-                        'thumbnail' => $productData['product']['images']['thumbnail'] ?? null,
-                    ] : null,
                 ]);
+
+            if (!empty($productData['product']['images'])) {
+                $product->images = $productData['product']['images'];
+                $product->save();
+            }
 
             foreach ($productData['categories'] as $category) {
                 $product->categories()->firstOrCreate(
