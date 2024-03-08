@@ -74,18 +74,23 @@ class ProductController extends Controller
                 );
             }
 
-            $brand = Brand::firstOrCreate(
-                [
-                    'api_id' => $productData['brand']['id']
-                ],
-                [
-                    'name' =>  $productData['brand']['name'],
-                    'supplier_id' => 0
-                ]
-            );
+            if (
+                !empty($productData['brand']) &&
+                !empty($productData['brand']['id'])
+             ) {
+                $brand = Brand::firstOrCreate(
+                    [
+                        'api_id' => $productData['brand']['id']
+                    ],
+                    [
+                        'name' =>  $productData['brand']['name'],
+                        'supplier_id' => 0
+                    ]
+                );
 
-            $product->brand_id = $brand->id;
-            $product->save();
+                $product->brand_id = $brand->id;
+                $product->save();
+            }
         }
 
         return response()->json(['message' => count($data) . ' Products successfully imported!'], 200);
