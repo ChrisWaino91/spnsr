@@ -34,7 +34,8 @@ class ProductController extends Controller
             if (
                 empty($productData['product']['api_id']) ||
                 empty($productData['product']['title']) ||
-                empty($productData['product']['reference'])
+                empty($productData['product']['reference']) ||
+                empty($productData['categories'])
             ) {
                 continue;
             }
@@ -57,11 +58,10 @@ class ProductController extends Controller
                     ] : null,
                 ]);
 
-            // check there are categories
             foreach ($productData['categories'] as $category) {
                 $product->categories()->firstOrCreate(
                     [
-                        'api_id' => $category['category_id'],
+                        'api_id' => $category['id'],
                     ],
                     [
                         'name' => $category['name'],
@@ -75,7 +75,7 @@ class ProductController extends Controller
 
             $brand = Brand::firstOrCreate(
                 [
-                    'api_id' => $productData['brand']['api_id']
+                    'api_id' => $productData['brand']['id']
                 ],
                 [
                     'name' =>  $productData['brand']['name'],
