@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -40,12 +41,8 @@ class ProductController extends Controller
                 continue;
             }
 
-            if (!empty($productData['product']['images'])) {
-                $stop = true;
-                return response()->json(['data' => $productData['product']['images']['medium']], 422);
-            }
-
-            if (!empty($stop)){
+            if (isset($productData['product']['images'])) {
+                Log::info('Product with image data:', ['data' => $productData]);
                 dd();
             }
 
