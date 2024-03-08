@@ -12,6 +12,16 @@ class ProductController extends Controller
     public function log(Request $request)
     {
         $data = $request->get('data');
+
+        $count = 0;
+        foreach ($data as $dat) {
+            $count++;
+            if ($count > 2) {
+                dd();
+            }
+            return response()->json(['data debug' => $data], 200);
+        }
+
         $rules = [
             '*.api_id' => 'required',
             '*.title' => 'required',
