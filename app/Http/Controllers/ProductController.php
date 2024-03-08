@@ -13,22 +13,10 @@ class ProductController extends Controller
     {
         $data = $request->get('data');
 
-        $count = 0;
-        foreach ($data as $dat) {
-            $count++;
-            if ($count > 2) {
-                dd();
-            }
-            return response()->json(['data debug' => $data], 200);
-        }
-
         $rules = [
-            '*.api_id' => 'required',
-            '*.title' => 'required',
-            '*.reference' => 'required',
-            '*.images.medium' => 'nullable|url',
-            '*.images.thumbnail' => 'nullable|url',
-            '*.categories.*.category_id' => 'required',
+            'data.*.product.api_id' => 'required',
+            'data.*.product.title' => 'required',
+            'data.*.product.reference' => 'required',
         ];
 
         $validator = Validator::make($data, $rules);
@@ -44,28 +32,28 @@ class ProductController extends Controller
         foreach ($data as $productData) {
 
             if (
-                empty($productData['api_id']) ||
-                empty($productData['title']) ||
-                empty($productData['reference'])
+                empty($productData['product']['api_id']) ||
+                empty($productData['product']['title']) ||
+                empty($productData['product']['reference'])
             ) {
                 continue;
             }
 
             $product = Product::firstOrCreate(
                 [
-                    'api_id' => $productData['api_id']
+                    'api_id' => $productData['product']['api_id']
                 ],
                 [
                     'brand_id' => 0,
-                    'title' => $productData['title'],
-                    'reference' => $productData['reference'],
-                    'price' => $productData['price'],
-                    'sale_price' => $productData['sale_price'],
-                    'rrp_price' => $productData['rrp_price'],
-                    'stock' => $productData['stock'],
-                    'images' => isset($productData['images']) ? [
-                        'medium' => $productData['images']['medium'] ?? null,
-                        'thumbnail' => $productData['images']['thumbnail'] ?? null,
+                    'title' => $productData['product']['title'],
+                    'reference' => $productData['product']['reference'],
+                    'price' => $productData['product']['price'],
+                    'sale_price' => $productData['product']['sale_price'],
+                    'rrp_price' => $productData['product']['rrp_price'],
+                    'stock' => $productData['product']['stock'],
+                    'images' => isset($productData['product']['images']) ? [
+                        'medium' => $productData['product']['images']['medium'] ?? null,
+                        'thumbnail' => $productData['product']['images']['thumbnail'] ?? null,
                     ] : null,
                 ]);
 
