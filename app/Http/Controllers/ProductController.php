@@ -42,7 +42,7 @@ class ProductController extends Controller
 
             if (!empty($productData['product']['images'])) {
                 $stop = true;
-                return response()->json(['data' => $productData], 422);
+                return response()->json(['data' => $productData['product']['images']], 422);
             }
 
             if (!empty($stop)){
