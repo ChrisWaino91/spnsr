@@ -40,6 +40,15 @@ class ProductController extends Controller
                 continue;
             }
 
+            if (!empty($productData['product']['images'])) {
+                $stop = true;
+                return response()->json(['data' => $productData], 422);
+            }
+
+            if (!empty($stop)){
+                dd();
+            }
+
             $product = Product::firstOrCreate(
                 [
                     'api_id' => $productData['product']['api_id']
