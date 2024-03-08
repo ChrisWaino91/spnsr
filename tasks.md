@@ -4,6 +4,8 @@ Call the endpoint online to store all products from demo site
 On demosite create an endpoint to store promotions, categories, products
 Call endpoint online 
 
+Message some designers about branding etc
+
 https://www.youtube.com/watch?v=6c4jVLWmDYU&t=14176s
 Copy the above dashboard
 

@@ -38,8 +38,10 @@ class ProductController extends Controller
                     'sale_price' => $productData['sale_price'],
                     'rrp_price' => $productData['rrp_price'],
                     'stock' => $productData['stock'],
-                    'images' => $productData['images'] ?? null,
-                ]
+                    'images' => isset($productData['images']) ? [
+                        'medium' => $productData['images']['medium'] ?? null,
+                        'thumbnail' => $productData['images']['thumbnail'] ?? null,
+                    ] : null,                ]
             );
 
             // check there are categories
