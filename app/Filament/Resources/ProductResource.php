@@ -57,6 +57,7 @@ class ProductResource extends Resource
 
     public static function table(Table $table): Table
     {
+        // hide brand column if user is not admin
         return $table
             ->modifyQueryUsing(function (Builder $query) {
                 if (auth()->user()->hasRole('admin')) {
@@ -68,12 +69,16 @@ class ProductResource extends Resource
                 $query->whereHas('brand.supplier.users', function ($query) use ($userId) {
                     $query->where('users.id', $userId);
                 });
+
             })
             ->columns([
+                Tables\Columns\ImageColumn::make('images.thumbnail')
+                    ->label('#')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('brand.name')
                     ->numeric()
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable( isToggledHiddenByDefault: !auth()->user()->hasRole('admin')),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable()

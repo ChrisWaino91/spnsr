@@ -1,5 +1,7 @@
-Finalise the storage of products (including images)
-Call the endpoint online to store all products from demo site
+Add the ability to link supplier to a brand from the supplier page
+Style the product page a bit better
+Make product page only show to 2dp
+
 
 On demosite create an endpoint to store promotions, categories, products
 Call endpoint online 
