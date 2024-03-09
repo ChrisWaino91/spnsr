@@ -1,3 +1,7 @@
+Add url logic to categories
+Add logic to open url when clicked
+Add url to category table and infolist
+
 
 
 On demosite create an endpoint to store promotions, categories, products

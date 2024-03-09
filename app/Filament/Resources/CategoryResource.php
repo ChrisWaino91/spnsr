@@ -98,7 +98,6 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
 

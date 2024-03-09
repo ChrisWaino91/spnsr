@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BrandResource\Pages;
-use App\Filament\Resources\BrandResource\RelationManagers;
-use App\Models\Brand;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Brand;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\BrandResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\BrandResource\RelationManagers;
 
 class BrandResource extends Resource
 {
@@ -23,7 +24,6 @@ class BrandResource extends Resource
     {
         return 'Shop';
     }
-
 
     public static function form(Form $form): Form
     {
@@ -43,8 +43,10 @@ class BrandResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('supplier.name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('products_count')
                     ->label('Number of Products')
@@ -64,11 +66,15 @@ class BrandResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
 
-            ]);
+            ])
+            ->recordUrl(
+                function (Model $record): string {
+                    return '/brands/' . $record->id;
+                }
+            );
     }
 
     public static function getRelations(): array
