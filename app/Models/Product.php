@@ -38,4 +38,14 @@ class Product extends Model
     {
         return $this->belongsToMany(Promotion::class);
     }
+
+    public function getThumbnailImageUrlAttribute()
+    {
+        return $this->images['thumbnail'] ?? asset('/images/products/no-image-thumb.jpg');
+    }
+
+    public function getMediumImageUrlAttribute()
+    {
+        return $this->images['medium'] ?? asset('/images/products/no-image-medium.jpg');
+    }
 }

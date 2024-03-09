@@ -2,22 +2,28 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Models\Product;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Product;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
+use Filament\Resources\Resource;
+use Filament\Infolists\Components\Group;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
+use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ProductResource\RelationManagers;
 
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
     public static function getNavigationGroup(): string
     {
@@ -28,9 +34,6 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('api_id')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
@@ -57,7 +60,6 @@ class ProductResource extends Resource
 
     public static function table(Table $table): Table
     {
-        // hide brand column if user is not admin
         return $table
             ->modifyQueryUsing(function (Builder $query) {
                 if (auth()->user()->hasRole('admin')) {
@@ -72,14 +74,16 @@ class ProductResource extends Resource
 
             })
             ->columns([
-                Tables\Columns\ImageColumn::make('images.thumbnail')
+                Tables\Columns\ImageColumn::make('thumbnail_image_url')
                     ->label('#')
                     ->circular(),
                 Tables\Columns\TextColumn::make('brand.name')
                     ->numeric()
                     ->sortable()
+                    ->searchable()
                     ->toggleable( isToggledHiddenByDefault: !auth()->user()->hasRole('admin')),
                 Tables\Columns\TextColumn::make('title')
+                    ->limit(40)
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
@@ -119,6 +123,53 @@ class ProductResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
+
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Product Information')
+                    ->columns(2)
+                    ->schema([
+                        ImageEntry::make('medium_image_url')
+                            ->label('')
+                            ->width(450)
+                            ->height(600),
+                        Group::make()
+                            ->schema([
+                                TextEntry::make('title')
+                                    ->label('Title:'),
+                                TextEntry::make('brand.name')
+                                    ->label('Brand:'),
+                                TextEntry::make('reference')
+                                    ->label('Reference:'),
+                                TextEntry::make('price')
+                                    ->label('Price:')
+                                    ->prefix('£')
+                                    ->numeric(decimalPlaces: 2),
+                                TextEntry::make('sale_price')
+                                    ->label('Sale Price:')
+                                    ->prefix('£')
+                                    ->numeric(decimalPlaces: 2),
+                                TextEntry::make('rrp_price')
+                                    ->label('RRP Price:')
+                                    ->prefix('£')
+                                    ->numeric(decimalPlaces: 2),
+                                TextEntry::make('stock')
+                                    ->label('Stock:'),
+
+
+                            ])
+                        ]),
+                Section::make('Category Information')
+                    ->schema([
+                        TextEntry::make('categories.name')
+                            ->label('Categories')
+                            ->listWithLineBreaks()
+                    ]),
 
             ]);
     }
