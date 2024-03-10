@@ -40,9 +40,6 @@ class CategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('url')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('level')
                     ->required()
                     ->numeric(),
@@ -62,8 +59,12 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('url')
-                    ->searchable(),
+                Tables\Columns\IconColumn::make('category_url')
+                    ->label('URL')
+                    ->icon('heroicon-o-cursor-arrow-ripple')
+                    ->color('primary')
+                    ->url(fn (Category $record) => '//' . $record->category_url)
+                    ->openUrlInNewTab(),
                 Tables\Columns\TextColumn::make('level')
                     ->numeric()
                     ->sortable(),
@@ -112,8 +113,10 @@ class CategoryResource extends Resource
                     ->schema([
                         TextEntry::make('name')
                             ->label('Name'),
-                        TextEntry::make('url')
-                            ->label('URL'),
+                        TextEntry::make('category_url')
+                            ->label('URL')
+                            ->url(fn (Category $record) => '//' . $record->category_url)
+                            ->openUrlInNewTab(),
                         TextEntry::make('cost_per_click')
                             ->label('Cost Per Click')
                             ->money('GBP')

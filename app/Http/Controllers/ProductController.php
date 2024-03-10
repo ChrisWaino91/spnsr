@@ -72,7 +72,6 @@ class ProductController extends Controller
                     ],
                     [
                         'name' => $category['name'],
-                        'url' => '/',
                         'level' => 0,
                         'promotion_id' => 0,
                         'cost_per_click' => 0.20,

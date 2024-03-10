@@ -33,4 +33,9 @@ class Category extends Model
         return $this->hasOne(Promotion::class);
     }
 
+    public function getCategoryUrlAttribute(): string
+    {
+        return env('CLIENT_URL') . '/goto-c' . $this->api_id;
+    }
+
 }
