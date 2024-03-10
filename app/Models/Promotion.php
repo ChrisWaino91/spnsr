@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -27,6 +28,10 @@ class Promotion extends Model
     {
         static::deleting(function ($promotion) {
             $promotion->update(['active' => false]);
+        });
+
+        static::created(function ($promotion) {
+            Category::find($promotion->category_id)->update(['promotion_id' => $promotion->id]);
         });
     }
 
