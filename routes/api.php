@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClickController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\ImpressionController;
 
 /*
@@ -23,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/click', [ClickController::class, 'log']);
     Route::post('/order', [OrderController::class, 'log']);
     Route::post('/products', [ProductController::class, 'log']);
+    Route::get('/campaigns', [CampaignController::class, 'get']);
 });
 
 Route::get('/test', function () {

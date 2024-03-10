@@ -83,7 +83,13 @@ class EditPromotion extends EditRecord
                 ->warning()
                 ->send();
         }
+    }
 
-
+    protected function afterCreate(): void
+    {
+        $category = Category::find($this->record->category_id);
+        $category->update([
+            'promotion_id' => $this->record->id,
+        ]);
     }
 }

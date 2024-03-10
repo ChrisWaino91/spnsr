@@ -60,6 +60,11 @@ class ProductController extends Controller
                 $product->save();
             }
 
+            if (!empty($productData['product']['url'])) {
+                $product->url = $productData['product']['url'];
+                $product->save();
+            }
+
             foreach ($productData['categories'] as $category) {
                 $product->categories()->firstOrCreate(
                     [
