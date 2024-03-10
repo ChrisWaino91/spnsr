@@ -39,13 +39,8 @@ class CategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->readonly()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('level')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('parent_id')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\TextInput::make('cost_per_click')
                     ->required()
                     ->numeric(),
@@ -84,7 +79,6 @@ class CategoryResource extends Resource
                         'Available' => 'success',
                         'Unavailable' => 'danger',
                     })
-                    ->alignment('right')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -99,10 +93,13 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
 
-            ]);
+            ])
+            ->recordUrl(false);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -137,6 +134,7 @@ class CategoryResource extends Resource
         return [
             'index' => Pages\ListCategories::route('/'),
             'view' => ViewCategory::route('/{record}/view'),
+            'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
 
