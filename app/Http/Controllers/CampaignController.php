@@ -10,7 +10,7 @@ class CampaignController extends Controller
     public function get(Request $request)
     {
         $campaigns = Campaign::with(['promotions' => function ($query) {
-            $query->withTrashed();
+            $query->withTrashed()->with('products');
         }])->withTrashed()->get();
 
          return response()->json($campaigns);

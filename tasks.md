@@ -4,7 +4,8 @@ Add url to category table and infolist
 Add stock to product promotion relation manager
 Remove create and create another from all views
 Make sure the stats are correct and actually based on clicks, orders, impressions
-
+Ensure we cant create a promotion against a category that has one. That logic doesnt seem to work when creating a promo
+(Aftercreate doesnt seem to work.)
 
 Create some campaigns and store them in VS
 On demosite create an endpoint to store promotions, categories, products
