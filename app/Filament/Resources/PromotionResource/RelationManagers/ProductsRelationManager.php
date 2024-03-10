@@ -44,6 +44,8 @@ class ProductsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('title')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('stock')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('impressions')
                     ->getStateUsing(function ($record) {
                         return Impression::where([
@@ -154,7 +156,7 @@ class ProductsRelationManager extends RelationManager
                     ->modalHeading('Stop Promoting This Product?')
                     ->modalDescription('Are you sure you\'d like to stop promoting this product? You can always undo this action later.')
                     ->modalSubmitActionLabel('Yes'),
-            Tables\Actions\Action::make('start')
+                Tables\Actions\Action::make('start')
                     ->visible(function ($record) {
                         $product = ProductPromotion::where([
                             'product_id' => $record->id,
