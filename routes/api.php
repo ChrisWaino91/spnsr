@@ -21,6 +21,7 @@ use App\Http\Controllers\ImpressionController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/impression', [ImpressionController::class, 'log']);
+    Route::post('/impressions', [ImpressionController::class, 'logMultiple']);
     Route::post('/click', [ClickController::class, 'log']);
     Route::post('/order', [OrderController::class, 'log']);
     Route::post('/products', [ProductController::class, 'log']);

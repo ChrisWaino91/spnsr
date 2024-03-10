@@ -1,6 +1,7 @@
 Add url logic to categories
 Add logic to open url when clicked
 Add url to category table and infolist
+pass category through to api
 Add stock to product promotion relation manager
 Remove create and create another from all views
 Make sure the stats are correct and actually based on clicks, orders, impressions

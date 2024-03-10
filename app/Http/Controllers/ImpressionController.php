@@ -19,4 +19,20 @@ class ImpressionController extends Controller
         $impression->save();
     }
 
+    public function logMultiple(Request $request)
+    {
+        $request->validate([
+            'impressions' => 'required|array',
+            'impressions.*.promotion_id' => 'required|integer',
+            'impressions.*.product_id' => 'required|integer',
+        ]);
+
+        foreach ($request->impressions as $impressionData) {
+            $impression = new Impression();
+            $impression->promotion_id = $impressionData['promotion_id'];
+            $impression->product_id = $impressionData['product_id'];
+            $impression->save();
+        }
+    }
+
 }
