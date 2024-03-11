@@ -37,7 +37,7 @@ class PromotionsRelationManager extends RelationManager
                 Forms\Components\Select::make('category_id')
                     ->label('Category')
                     ->options(function() {
-                        return Category::where('id', $this->mountedTableActionsData[0]['category_id'])->pluck('name', 'id')->toArray();
+                        return Category::where('promotion_id', 0)->pluck('name', 'id')->toArray();
                     })
                     ->live()
                     ->afterStateUpdated(function (Set $set, ?string $state) {

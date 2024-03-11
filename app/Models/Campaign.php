@@ -60,7 +60,7 @@ class Campaign extends Model
     {
         return DB::table('campaigns')
             ->join('promotions', 'campaigns.id', '=', 'promotions.campaign_id')
-            ->join('impressions', 'promotions.id', '=', 'impressions.promotion_id')
+            ->join('orders', 'promotions.id', '=', 'orders.promotion_id')
             ->where('campaigns.id', $this->id)
             ->count();
     }

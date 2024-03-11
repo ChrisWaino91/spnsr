@@ -25,19 +25,19 @@ class ViewInvoice extends ViewRecord
         $invoiceMonthEnd = $this->record->invoice_date->copy()->endOfMonth();
 
         $this->campaigns = Campaign::where('supplier_id', $this->record->supplier_id)
-        ->whereHas('promotions.clicks', function ($query) use ($invoiceMonthStart, $invoiceMonthEnd) {
-            $query->whereBetween('created_at', [$invoiceMonthStart, $invoiceMonthEnd]);
-        })
-        ->with(['promotions' => function ($query) use ($invoiceMonthStart, $invoiceMonthEnd) {
-            $query->whereHas('clicks', function ($q) use ($invoiceMonthStart, $invoiceMonthEnd) {
-                $q->whereBetween('created_at', [$invoiceMonthStart, $invoiceMonthEnd]);
-            });
-        }, 'promotions.clicks' => function ($query) use ($invoiceMonthStart, $invoiceMonthEnd) {
-            $query->whereBetween('created_at', [$invoiceMonthStart, $invoiceMonthEnd]);
-        },
-            'promotions.impressions' => function ($query) use ($invoiceMonthStart, $invoiceMonthEnd) {
-            $query->whereBetween('created_at', [$invoiceMonthStart, $invoiceMonthEnd]);
-        }
+            ->whereHas('promotions.clicks', function ($query) use ($invoiceMonthStart, $invoiceMonthEnd) {
+                $query->whereBetween('created_at', [$invoiceMonthStart, $invoiceMonthEnd]);
+            })
+            ->with(['promotions' => function ($query) use ($invoiceMonthStart, $invoiceMonthEnd) {
+                $query->whereHas('clicks', function ($q) use ($invoiceMonthStart, $invoiceMonthEnd) {
+                    $q->whereBetween('created_at', [$invoiceMonthStart, $invoiceMonthEnd]);
+                });
+            }, 'promotions.clicks' => function ($query) use ($invoiceMonthStart, $invoiceMonthEnd) {
+                $query->whereBetween('created_at', [$invoiceMonthStart, $invoiceMonthEnd]);
+            },
+                'promotions.impressions' => function ($query) use ($invoiceMonthStart, $invoiceMonthEnd) {
+                $query->whereBetween('created_at', [$invoiceMonthStart, $invoiceMonthEnd]);
+            }
         ])
         ->get();
     }
