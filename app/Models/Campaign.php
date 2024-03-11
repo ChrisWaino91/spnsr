@@ -56,6 +56,15 @@ class Campaign extends Model
             ->count();
     }
 
+    public function getTotalOrdersAttribute()
+    {
+        return DB::table('campaigns')
+            ->join('promotions', 'campaigns.id', '=', 'promotions.campaign_id')
+            ->join('impressions', 'promotions.id', '=', 'impressions.promotion_id')
+            ->where('campaigns.id', $this->id)
+            ->count();
+    }
+
     public function spend($month = null)
     {
         $totalSpend = 0.00;

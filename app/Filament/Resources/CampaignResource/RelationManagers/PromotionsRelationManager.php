@@ -37,19 +37,11 @@ class PromotionsRelationManager extends RelationManager
                 Forms\Components\Select::make('category_id')
                     ->label('Category')
                     ->options(function() {
-
-                        $isEditing = !empty($this->mountedTableActionsData[0]['category_id']);
-
-                        if ($isEditing) {
-                           return Category::where('id', $this->mountedTableActionsData[0]['category_id'])->pluck('name', 'id')->toArray();
-                        } else {
-                            return Category::where('promotion_id', 0)->pluck('name', 'id')->toArray();
-                        }
-
+                        return Category::where('id', $this->mountedTableActionsData[0]['category_id'])->pluck('name', 'id')->toArray();
                     })
                     ->live()
                     ->afterStateUpdated(function (Set $set, ?string $state) {
-                        $costPerClick = Category::find($state)->value('cost_per_click');
+                        $costPerClick = Category::where('id', $state)->value('cost_per_click');
                         $set('cost_per_click', $costPerClick);
                     }),
                 Forms\Components\TextInput::make('cost_per_click')
