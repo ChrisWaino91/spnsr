@@ -60,6 +60,11 @@ class Promotion extends Model
         return $this->hasMany(Click::class);
     }
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function spend()
     {
         return $this->clicks->count() * $this->cost_per_click;

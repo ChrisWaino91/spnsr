@@ -1,6 +1,7 @@
-
 On Visualsoft store impressions, clicks and orders
 Add order storage logic
+Create order factory
+Sort out order resources
 Make sure the stats are correct and actually based on clicks, orders, impressions
 
 
